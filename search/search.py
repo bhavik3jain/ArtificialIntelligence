@@ -91,21 +91,15 @@ def depthFirstSearch(problem):
     # print("Start: {0}".format(problem.getStartState()))
     fringe = util.Stack()
     visited = []
-    actions2 = []
     fringe.push((problem.getStartState(), []))
     while not fringe.isEmpty():
         current, actions = fringe.pop()
-        print(actions)
         visited = visited + [current]
         for successor, direction, step in problem.getSuccessors(current):
             if not successor in visited:
                 if problem.isGoalState(successor):
-                    print("Goal State")
                     return actions + [direction]
                 fringe.push((successor, actions + [direction]))
-                actions2.append(direction)
-                print("Action2: {0}".format(actions2))
-                print("Action {0}".format(actions + [direction]))
                 visited = visited + [successor]
     return []
 def breadthFirstSearch(problem):
