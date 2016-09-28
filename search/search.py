@@ -120,8 +120,6 @@ def breadthFirstSearch(problem):
                 visited = visited + [successor]
     return []
 
-    util.raiseNotDefined()
-
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
@@ -140,7 +138,7 @@ def uniformCostSearch(problem):
                 new_actions = actions + [direction]
                 fringe.push((successor, new_actions), problem.getCostOfActions(new_actions))
 
-[]
+    return[]
 
 def nullHeuristic(state, problem=None):
     """
