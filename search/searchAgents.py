@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -287,7 +287,6 @@ class CornersProblem(search.SearchProblem):
         self._expanded = 0 # DO NOT CHANGE; Number of search nodes expanded
         # Please add any code here which you would like to use
         # in initializing the problem
-        "*** YOUR CODE HERE ***"
 
     def getStartState(self):
         """
@@ -295,14 +294,20 @@ class CornersProblem(search.SearchProblem):
         space)
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+
+        # this represents the a state (current state, visisted corners)
+        return (self.startingPosition, [])
 
     def isGoalState(self, state):
         """
         Returns whether this search state is a goal state of the problem.
         """
-        "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        node = state[0]
+        visisted_corner = state[1]
+        if node in self.corners:
+            if not node in visitedCorners:
+                visisted_corner.append(node)
+        return len(visitedCorners) == 4
 
     def getSuccessors(self, state):
         """
@@ -314,7 +319,6 @@ class CornersProblem(search.SearchProblem):
             state, 'action' is the action required to get there, and 'stepCost'
             is the incremental cost of expanding to that successor
         """
-
         successors = []
         for action in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
             # Add a successor state to the successor list if the action is legal
@@ -326,8 +330,29 @@ class CornersProblem(search.SearchProblem):
 
             "*** YOUR CODE HERE ***"
 
-        self._expanded += 1 # DO NOT CHANGE
+        self._expanded += 1
         return successors
+
+        # x,y = state[0]
+        # visitedCorners = state[1]
+        #
+        # successors = []
+        # for action in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
+        #
+        #     dx, dy = Actions.directionToVector(action)
+        #     nextx, nexty = int(x + dx), int(y + dy)
+        #     hitsWall = self.walls[nextx][nexty]
+        #     if not hitsWall:
+        #         successorVisitedCorners = list(visitedCorners)
+        #         next_node = (nextx, nexty)
+        #         if next_node in self.corners:
+        #             if not next_node in successorVisitedCorners:
+        #                 successorVisitedCorners.append( next_node )
+        #         successor = ((next_node, successorVisitedCorners), action, 1)
+        #         successors.append(successor)
+        #
+        # self._expanded += 1
+        # return successors
 
     def getCostOfActions(self, actions):
         """
