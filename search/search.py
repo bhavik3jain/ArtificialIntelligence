@@ -88,61 +88,53 @@ def depthFirstSearch(problem):
     """
     "*** YOUR CODE HERE ***"
 
-    # print("Start: {0}".format(problem.getStartState()))
     fringe = util.Stack()
-    visited = []
     fringe.push((problem.getStartState(), []))
-
+    visited = []
     while not fringe.isEmpty():
         current, actions = fringe.pop()
-        if current in visited: continue
-        visited = visited + [current]
         if problem.isGoalState(current):
             return actions
-
-        for successor, direction, step in problem.getSuccessors(current):
-            if not successor in visited:
-                fringe.push((successor, actions + [direction]))
-    return None
+        if current not in visited:
+            visited.append(current)
+            for successor, direction, step in problem.getSuccessors(current):
+                if successor not in visited:
+                    fringe.push((successor, actions + [direction]))
+    return []
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
 
     fringe = util.Queue()
-    visited = []
     fringe.push((problem.getStartState(), []))
+    visited = []
     while not fringe.isEmpty():
         current, actions = fringe.pop()
-        if current in visited: continue
-        visited = visited + [current]
-
         if problem.isGoalState(current):
             return actions
-
-        for successor, direction, step in problem.getSuccessors(current):
-            if not successor in visited:
-                fringe.push((successor, actions + [direction]))
-    return None
+        if current not in visited:
+            visited.append(current)
+            for successor, direction, step in problem.getSuccessors(current):
+                if successor not in visited:
+                    fringe.push((successor, actions + [direction]))
+    return []
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
     fringe = util.PriorityQueue()
-    fringe.push((problem.getStartState(), []), 0)
+    fringe.push((problem.getStartState(), [], 0), 0)
     visited = []
-
     while not fringe.isEmpty():
-        current, actions = fringe.pop()
-        if current in visited: continue
-        visited = visited + [current]
-        if problem.isGoalState(current):
-            return actions
-        for successor, direction, step in problem.getSuccessors(current):
-            if not successor in visited:
-                new_actions = actions + [direction]
-                fringe.push((successor, new_actions), problem.getCostOfActions(new_actions))
-
-    return None
+        location, path, cost = fringe.pop()
+        if problem.isGoalState(location):
+            return path
+        if location not in visited:
+            visited.append(location)
+            for successor, direction, step in problem.getSuccessors(location):
+                if successor not in visited:
+                    fringe.push((successor, path + [direction], step+cost), step+cost)
+    return []
 
 def nullHeuristic(state, problem=None):
     """
@@ -166,8 +158,8 @@ def aStarSearch(problem, heuristic=nullHeuristic):
         for successor, direction, cost in problem.getSuccessors(current):
             if not successor in visited:
                 new_actions = actions + [direction]
-                fringe.push( (successor, new_actions), problem.getCostOfActions(new_actions) + heuristic(successor, problem))
-    return None
+                fringe.push((successor, new_actions), problem.getCostOfActions(new_actions) + heuristic(successor, problem))
+    return []
 
 # Abbreviations
 bfs = breadthFirstSearch
