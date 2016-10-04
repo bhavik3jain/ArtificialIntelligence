@@ -354,6 +354,8 @@ class CornersProblem(search.SearchProblem):
             if self.walls[x][y]: return 999999
         return len(actions)
 
+def find_manhattan_distance(xy1, xy2):
+    return abs(xy1[0] - xy2[0]) + abs(xy1[1] - xy2[1])
 
 def cornersHeuristic(state, problem):
     """
@@ -470,6 +472,14 @@ def foodHeuristic(state, problem):
     """
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
+    total = []
+    for xPos, row in enumerate(foodGrid):
+        for yPos, col in enumerate(row):
+            if foodGrid[xPos][yPos]:
+                #total.append(find_manhattan_distance(position, (xPos,yPos)))
+                total.append(mazeDistance(position, (xPos,yPos), problem.startingGameState))
+    if total:
+        return max(total)
     return 0
 
 class ClosestDotSearchAgent(SearchAgent):
