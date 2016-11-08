@@ -263,43 +263,7 @@ def betterEvaluationFunction(currentGameState):
       DESCRIPTION: <write something here so we know what you did>
     """
     "*** YOUR CODE HERE ***"
-    if currentGameState.isWin():  return float("inf")
-    if currentGameState.isLose(): return float("-inf")
-
-    # Fetch several data we require to analyze thecurrent state of the pacman's environment
-    pacmanPos = currentGameState.getPacmanPosition()
-    ghostStates = currentGameState.getGhostStates()
-    foodPos = currentGameState.getFood()
-    capsules = currentGameState.getCapsules()
-
-    def manhattan(xy1, xy2):
-        """
-        Our lil' and old Manhattan taxi drive distance function
-        """
-        return abs(xy1[0] - xy2[0]) + abs(xy1[1] - xy2[1])
-
-    manhattans_food = [ ( manhattan(pacmanPos, food) ) for food in foodPos.asList() ]
-
-    min_manhattans_food = min(manhattans_food)
-
-    manhattans_ghost = [ manhattan(pacmanPos, ghostState.getPosition()) for ghostState in ghostStates if ghostState.scaredTimer == 0 ]
-    min_manhattans_ghost = -3
-    if ( len(manhattans_ghost) > 0 ):
-        min_manhattans_ghost = min(manhattans_ghost)
-
-    manhattans_ghost_scared = [ manhattan(pacmanPos, ghostState.getPosition()) for ghostState in ghostStates if ghostState.scaredTimer > 0 ]
-    min_manhattans_ghost_scared = 0;
-    if ( len(manhattans_ghost_scared) > 0 ):
-        min_manhattans_ghost_scared = min(manhattans_ghost_scared)
-    score = scoreEvaluationFunction(currentGameState)
-
-    score += -1.5 * min_manhattans_food
-    score += -2 * ( 1.0 / min_manhattans_ghost )
-    score += -2 * min_manhattans_ghost_scared
-    score += -20 * len(capsules)
-    score += -4 * len(foodPos.asList())
-
-    return score
+    return util.undefined
 
 # Abbreviation
 better = betterEvaluationFunction
