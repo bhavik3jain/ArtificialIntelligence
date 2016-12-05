@@ -52,8 +52,6 @@ class QLearningAgent(ReinforcementAgent):
           or the Q node value otherwise
         """
         "*** YOUR CODE HERE ***"
-        if (state, action) not in self.qVals:
-            self.qVals[(state, action)] = 0.0
         return self.qVals[(state, action)]
 
 
