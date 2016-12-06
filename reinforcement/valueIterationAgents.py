@@ -88,11 +88,12 @@ class ValueIterationAgent(ValueEstimationAgent):
           terminal state, you should return None.
         """
         "*** YOUR CODE HERE ***"
-        if self.mdp.isTerminal(state):
-            return None
-        if len(self.mdp.getPossibleActions(state)) == 0:
-            return None
-        value, policy = float("-inf"), None
+
+        if self.mdp.isTerminal(state): return None
+        if len(self.mdp.getPossibleActions(state)) == 0: return None
+
+        value = float("-inf")
+        policy = None
         for action in self.mdp.getPossibleActions(state):
           tmp = self.computeQValueFromValues(state, action)
           if tmp >= value:
