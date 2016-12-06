@@ -66,7 +66,7 @@ class QLearningAgent(ReinforcementAgent):
         if len(self.getLegalActions(state)) == 0:
             return 0
         else:
-            max = [self.getQValue(state, action) for action in self.getLegalActions(state)]
+            values = [self.getQValue(state, action) for action in self.getLegalActions(state)]
             return max(values)
 
     def computeActionFromQValues(self, state):
